@@ -44,6 +44,7 @@ extension ViewController {
         addScanButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100).isActive = true
         
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         scansCollectionView = UICollectionView(frame: self.view.bounds.inset(by: UIEdgeInsets(top: 50, left: 16, bottom: 200, right: 16)), collectionViewLayout: layout)
         scansCollectionView.register(ScanCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         scansCollectionView.delegate = self
@@ -76,6 +77,7 @@ extension UIViewController: VNDocumentCameraViewControllerDelegate {
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         scans.count
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -91,7 +93,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 extension ViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 80, height: 100)
+        CGSize(width: collectionView.frame.width/1.5, height: collectionView.frame.height/1.5)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

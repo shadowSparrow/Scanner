@@ -31,11 +31,11 @@ class ScanCollectionViewCell: UICollectionViewCell {
         
         // Constraints
         scan.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        scan.heightAnchor.constraint(equalToConstant: self.frame.height/1.5).isActive = true
+        scan.heightAnchor.constraint(equalToConstant: self.frame.height/1.2).isActive = true
         scan.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         
         scanName.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        scanName.heightAnchor.constraint(equalToConstant: self.frame.height/3).isActive = true
+        scanName.heightAnchor.constraint(equalToConstant: self.frame.height/5).isActive = true
         scanName.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
         
         

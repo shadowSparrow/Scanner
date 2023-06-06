@@ -15,6 +15,8 @@
 		04D090762A2FCA1B0072CE7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D090752A2FCA1B0072CE7F /* Main.storyboard */; };
 		04D090782A2FCCFF0072CE7F /* Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D090772A2FCCFF0072CE7F /* Scan.swift */; };
 		04D0907A2A2FCE310072CE7F /* ScanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D090792A2FCE310072CE7F /* ScanCollectionViewCell.swift */; };
+		04D090842A2FEA450072CE7F /* ScanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D090832A2FEA450072CE7F /* ScanDetailViewController.swift */; };
+		04D090872A2FEA690072CE7F /* ScanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D090862A2FEA690072CE7F /* ScanDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		04D090752A2FCA1B0072CE7F /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		04D090772A2FCCFF0072CE7F /* Scan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scan.swift; sourceTree = "<group>"; };
 		04D090792A2FCE310072CE7F /* ScanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanCollectionViewCell.swift; sourceTree = "<group>"; };
+		04D090832A2FEA450072CE7F /* ScanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDetailViewController.swift; sourceTree = "<group>"; };
+		04D090862A2FEA690072CE7F /* ScanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +66,8 @@
 			children = (
 				04D0905F2A2FC8F30072CE7F /* AppDelegate.swift */,
 				04D090612A2FC8F30072CE7F /* SceneDelegate.swift */,
-				04D090632A2FC8F30072CE7F /* ViewController.swift */,
-				04D090792A2FCE310072CE7F /* ScanCollectionViewCell.swift */,
+				04D090822A2FEA060072CE7F /* ViewControllers */,
+				04D090852A2FEA500072CE7F /* Views */,
 				04D090772A2FCCFF0072CE7F /* Scan.swift */,
 				04D090752A2FCA1B0072CE7F /* Main.storyboard */,
 				04D090682A2FC8F40072CE7F /* Assets.xcassets */,
@@ -71,6 +75,24 @@
 				04D0906D2A2FC8F40072CE7F /* Info.plist */,
 			);
 			path = Scanner;
+			sourceTree = "<group>";
+		};
+		04D090822A2FEA060072CE7F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				04D090632A2FC8F30072CE7F /* ViewController.swift */,
+				04D090832A2FEA450072CE7F /* ScanDetailViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		04D090852A2FEA500072CE7F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				04D090792A2FCE310072CE7F /* ScanCollectionViewCell.swift */,
+				04D090862A2FEA690072CE7F /* ScanDetailView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,9 +167,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D0907A2A2FCE310072CE7F /* ScanCollectionViewCell.swift in Sources */,
+				04D090872A2FEA690072CE7F /* ScanDetailView.swift in Sources */,
 				04D090642A2FC8F30072CE7F /* ViewController.swift in Sources */,
 				04D090602A2FC8F30072CE7F /* AppDelegate.swift in Sources */,
 				04D090782A2FCCFF0072CE7F /* Scan.swift in Sources */,
+				04D090842A2FEA450072CE7F /* ScanDetailViewController.swift in Sources */,
 				04D090622A2FC8F30072CE7F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
