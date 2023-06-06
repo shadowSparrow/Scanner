@@ -17,12 +17,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Documents"
-       // self.view.backgroundColor = .cyan
         setUIElements()
     }
     
     @objc func startScanningAction(_ sender: UIButton) {
-        configureScanDocs()
+        //configureScanDocs()
+        let destinationVC = ScanDetailViewController()
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
 
 }
