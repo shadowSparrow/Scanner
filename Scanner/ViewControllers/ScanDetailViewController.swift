@@ -12,9 +12,9 @@ class ScanDetailViewController: UIViewController {
     var detailView: DetailView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let navigationVC = UINavigationController(rootViewController: self)
         
-         detailView = DetailView()
+        
+        detailView = DetailView()
         detailView.frame = self.view.frame
         self.view.addSubview(detailView)
         // Do any additional setup after loading the view.

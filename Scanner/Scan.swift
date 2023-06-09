@@ -10,5 +10,5 @@ import UIKit
 
 struct Scan {
     let scanImage: UIImage
-    let scanName: String
+    var scanName: String
 }
