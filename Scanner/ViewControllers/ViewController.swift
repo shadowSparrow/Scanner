@@ -15,8 +15,7 @@ var scanLabel: UILabel!
 //var scansCollectionView: UICollectionView!
 var scans: [Scan] = []
 
-var textRecognitionRequest = VNRecognizeTextRequest(completionHandler: nil)
-    private let textRecognitionWorkQueue = DispatchQueue(label: "MyVisionScannerQueue", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
+
 
 class ViewController: UIViewController {
 
@@ -104,47 +103,68 @@ extension UIViewController: VNDocumentCameraViewControllerDelegate {
     public func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
         for pageNumber in 0..<scan.pageCount {
             let originalImage = scan.imageOfPage(at: pageNumber)
-            let newImage = compressedImage(originalImage)
-            scanView.image = newImage
+            detectText(in: originalImage)
+            scanView.image = originalImage
             //scansCollectionView.reloadData()
-        
+            
         }
         controller.dismiss(animated: true)
     }
     
-    func compressedImage(_ originalImage: UIImage) -> UIImage {
-            guard let imageData = originalImage.jpegData(compressionQuality: 1),
-                let reloadedImage = UIImage(data: imageData) else {
-                    return originalImage
-            }
-            return reloadedImage
-        }
     
-     func setupVision() {
-            textRecognitionRequest = VNRecognizeTextRequest { (request, error) in
-                guard let observations = request.results as? [VNRecognizedTextObservation] else { return }
-                
-                var detectedText = ""
-                for observation in observations {
-                    guard let topCandidate = observation.topCandidates(1).first else { return }
-                    print("text \(topCandidate.string) has confidence \(topCandidate.confidence)")
-        
-                    detectedText += topCandidate.string
-                    detectedText += "\n"
-                    
-                }
-            }
-            textRecognitionRequest.recognitionLevel = .accurate
-        
-         DispatchQueue.main.async {
-             
-         }
-        
-       
-        }
     
-}
+    func detectText(in image: UIImage) {
+        guard let image = image.cgImage else {
+            print("Invalid image")
+            return
+        }
+        
+        let request = VNRecognizeTextRequest { (request, error) in
+            if let error = error {
+                print("Error detecting text: \(error)")
+            } else {
+                self.handleDetectionResults(results: request.results)
+            }
+        }
+        request.recognitionLanguages = ["en_US"]
+        request.recognitionLevel = .accurate
+        performDetection(request: request, image: image)
+    }
+    
+    
+    func performDetection(request: VNRecognizeTextRequest, image: CGImage) {
+        let requests = [request]
+        
+        let handler = VNImageRequestHandler(cgImage: image, orientation: .up, options: [:])
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try handler.perform(requests)
+            } catch let error {
+                print("Error: \(error)")
+            }
+        }
+    }
+    
+    func handleDetectionResults(results: [Any]?) {
+      guard let results = results, results.count > 0 else {
+          print("No text found")
+          return
+      }
 
+      for result in results {
+          if let observation = result as? VNRecognizedTextObservation {
+              for text in observation.topCandidates(1) {
+                  print(text.string)
+                  print(text.confidence)
+                  print(observation.boundingBox)
+                  print("\n")
+              }
+          }
+      }
+    }
+
+}
 /*
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
