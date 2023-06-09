@@ -12,6 +12,7 @@ import Vision
 var addScanButton: UIButton!
 var scanView: UIImageView!
 var scanLabel: UILabel!
+var scanTexView: UITextView!
 //var scansCollectionView: UICollectionView!
 var scans: [Scan] = []
 
@@ -53,10 +54,10 @@ extension ViewController {
         scanView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(scanView)
         
-        scanLabel = UILabel()
-        scanLabel.backgroundColor = .blue
-        scanLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(scanLabel)
+        scanTexView = UITextView()
+        scanTexView.backgroundColor = .blue
+        scanView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(scanView)
         
         // Constraints
         addScanButton.centerXAnchor.constraint(equalToSystemSpacingAfter: self.view.centerXAnchor , multiplier: 0).isActive = true
@@ -70,24 +71,10 @@ extension ViewController {
         scanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16).isActive = true
         scanView.heightAnchor.constraint(equalToConstant: 400).isActive = true
         
-        scanLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
-        scanLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16).isActive = true
-        scanLabel.topAnchor.constraint(equalTo: scanView.bottomAnchor, constant: 0).isActive = true
-        scanLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        /*
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        */
+        scanTexView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        scanTexView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        scanTexView.topAnchor.constraint(equalTo: scanView.bottomAnchor, constant: 0).isActive = true
         
-        /*
-        scansCollectionView = UICollectionView(frame: self.view.bounds.inset(by: UIEdgeInsets(top: 50, left: 16, bottom: 200, right: 16)), collectionViewLayout: layout)
-        scansCollectionView.register(ScanCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        scansCollectionView.delegate = self
-        scansCollectionView.dataSource = self
-        scansCollectionView.isPagingEnabled = true
-        //scansCollectionView.backgroundColor = UIColor.cyan
-        self.view.addSubview(scansCollectionView)
-         */
     }
     
 }
@@ -154,11 +141,17 @@ extension UIViewController: VNDocumentCameraViewControllerDelegate {
 
       for result in results {
           if let observation = result as? VNRecognizedTextObservation {
+              
               for text in observation.topCandidates(1) {
                   print(text.string)
-                  print(text.confidence)
-                  print(observation.boundingBox)
-                  print("\n")
+                  
+                  DispatchQueue.main.async {
+                      scanLabel.text = text.string
+                  }
+                  
+                  //print(text.confidence)
+                  //print(observation.boundingBox)
+                  //print("\n")
               }
           }
       }
