@@ -9,31 +9,33 @@ import UIKit
 import VisionKit
 import Vision
 
-var addScanButton: UIButton!
-var scanView: UIImageView!
-var scanLabel: UILabel!
-var scanTexView: UITextView!
-//var scansCollectionView: UICollectionView!
-var scans: [Scan] = []
-
-
 
 class ViewController: UIViewController {
 
+    var addScanButton: UIButton!
+    var scanView: UIImageView!
+    var scanLabel: UILabel!
+    var scanTexView: UITextView!
+    var scans: [Scan] = []
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Documents"
         setUIElements()
-        
+        setViewConstraints()
+        setTextViewContraints()
+        setButtonContraints()
     }
     
     @objc func startScanningAction(_ sender: UIButton) {
         configureScanDocs()
+        
     }
 
 }
 
-extension ViewController {
+extension ViewController: VNDocumentCameraViewControllerDelegate {
     
     private func setUIElements() {
         addScanButton = UIButton(configuration: .tinted())
@@ -42,58 +44,55 @@ extension ViewController {
         addScanButton.addTarget(self, action: #selector(startScanningAction), for: .allEvents)
         self.view.addSubview(addScanButton)
         
-        // Constraints
-        addScanButton.centerXAnchor.constraint(equalToSystemSpacingAfter: self.view.centerXAnchor , multiplier: 0).isActive = true
-        addScanButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        addScanButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
-        addScanButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16).isActive = true
-        addScanButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100).isActive = true
+        scanTexView = UITextView()
+        scanTexView.backgroundColor = .cyan
+        scanTexView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(scanTexView)
         
         scanView = UIImageView()
-        scanView.backgroundColor = .cyan
+        scanView.backgroundColor = .blue
         scanView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(scanView)
         
-        scanTexView = UITextView()
-        scanTexView.backgroundColor = .blue
-        scanView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(scanView)
-        
-        // Constraints
-        addScanButton.centerXAnchor.constraint(equalToSystemSpacingAfter: self.view.centerXAnchor , multiplier: 0).isActive = true
-        addScanButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        addScanButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
-        addScanButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16).isActive = true
-        addScanButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100).isActive = true
-        
-        scanView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 132).isActive = true
-        scanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
-        scanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16).isActive = true
-        scanView.heightAnchor.constraint(equalToConstant: 400).isActive = true
-        
-        scanTexView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        scanTexView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        scanTexView.topAnchor.constraint(equalTo: scanView.bottomAnchor, constant: 0).isActive = true
-        
+
     }
     
-}
-
-extension UIViewController: VNDocumentCameraViewControllerDelegate {
     
-    func configureScanDocs() {
+    func setButtonContraints() {
+        NSLayoutConstraint.activate([addScanButton.centerXAnchor.constraint(equalToSystemSpacingAfter: self.view.centerXAnchor , multiplier: 0),
+                                      addScanButton.heightAnchor.constraint(equalToConstant: 50),
+                                      addScanButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+                                      addScanButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+                                      addScanButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100)])
+    }
+    
+     private func setTextViewContraints() {
+         NSLayoutConstraint.activate([scanTexView.heightAnchor.constraint(equalToConstant: 200),
+                                      scanTexView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+                                      scanTexView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+                                      scanTexView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                      scanTexView.bottomAnchor.constraint(equalTo: addScanButton.topAnchor, constant: -16)])
+    }
+    
+    private func setViewConstraints() {
+        NSLayoutConstraint.activate([scanView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 132),
+                                     scanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+                                     scanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+                                     scanView.heightAnchor.constraint(equalToConstant: 300)])
+    }
+    
+    
+   private func configureScanDocs() {
         let scanDoucument = VNDocumentCameraViewController()
         scanDoucument.delegate = self
         self.present(scanDoucument, animated: true)
     }
     
-    public func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+ func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
         for pageNumber in 0..<scan.pageCount {
             let originalImage = scan.imageOfPage(at: pageNumber)
             detectText(in: originalImage)
             scanView.image = originalImage
-            //scansCollectionView.reloadData()
-            
         }
         controller.dismiss(animated: true)
     }
@@ -146,42 +145,13 @@ extension UIViewController: VNDocumentCameraViewControllerDelegate {
                   print(text.string)
                   
                   DispatchQueue.main.async {
-                      scanLabel.text = text.string
+                      self.scanTexView.text = text.string
                   }
-                  
-                  //print(text.confidence)
-                  //print(observation.boundingBox)
-                  //print("\n")
               }
           }
       }
     }
+}
 
-}
-/*
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        scans.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ScanCollectionViewCell
-        cell.backgroundColor = .blue
-        cell.scan.image = scans[indexPath.row].scanImage
-        cell.scanName.text = scans[indexPath.row].scanName
-        return cell
-    }
-    
-    
-}
-extension ViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.frame.width, height: collectionView.frame.height/1.1)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 50, left: 16, bottom: 50, right: 16)
-    }
-}
-*/
+
+

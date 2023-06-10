@@ -17,6 +17,7 @@
 		04D0907A2A2FCE310072CE7F /* ScanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D090792A2FCE310072CE7F /* ScanCollectionViewCell.swift */; };
 		04D090842A2FEA450072CE7F /* ScanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D090832A2FEA450072CE7F /* ScanDetailViewController.swift */; };
 		04D090872A2FEA690072CE7F /* ScanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D090862A2FEA690072CE7F /* ScanDetailView.swift */; };
+		04E729C82A351EEC00848D4A /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E729C72A351EEC00848D4A /* TextViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		04D090792A2FCE310072CE7F /* ScanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanCollectionViewCell.swift; sourceTree = "<group>"; };
 		04D090832A2FEA450072CE7F /* ScanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDetailViewController.swift; sourceTree = "<group>"; };
 		04D090862A2FEA690072CE7F /* ScanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDetailView.swift; sourceTree = "<group>"; };
+		04E729C72A351EEC00848D4A /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				04D090632A2FC8F30072CE7F /* ViewController.swift */,
+				04E729C72A351EEC00848D4A /* TextViewController.swift */,
 				04D090832A2FEA450072CE7F /* ScanDetailViewController.swift */,
 			);
 			path = ViewControllers;
@@ -173,6 +176,7 @@
 				04D090782A2FCCFF0072CE7F /* Scan.swift in Sources */,
 				04D090842A2FEA450072CE7F /* ScanDetailViewController.swift in Sources */,
 				04D090622A2FC8F30072CE7F /* SceneDelegate.swift in Sources */,
+				04E729C82A351EEC00848D4A /* TextViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
