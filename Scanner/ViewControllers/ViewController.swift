@@ -12,10 +12,31 @@ import Vision
 
 class ViewController: UIViewController {
 
-    var addScanButton: UIButton!
-    var scanView: UIImageView!
-    var scanLabel: UILabel!
-    var scanTexView: UITextView!
+    lazy var addScanButton: UIButton = {
+        let button = UIButton(configuration: .tinted())
+        button.setTitle("New Scan", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(startScanningAction), for: .allEvents)
+        return button
+    }()
+    
+     lazy var scanView: UIImageView = {
+        let imageView = UIImageView()
+         imageView.contentMode = .scaleAspectFit
+         imageView.backgroundColor = .blue
+         imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    
+   lazy var scanTexView: UITextView = {
+         let texView = UITextView()
+        texView.backgroundColor = .cyan
+        texView.textColor = .white
+        texView.translatesAutoresizingMaskIntoConstraints = false
+       return texView
+    }()
+    
     var scans: [Scan] = []
     
     
@@ -39,25 +60,9 @@ class ViewController: UIViewController {
 extension ViewController: VNDocumentCameraViewControllerDelegate {
     
     private func setUIElements() {
-        addScanButton = UIButton(configuration: .tinted())
-        addScanButton.setTitle("New Scan", for: .normal)
-        addScanButton.translatesAutoresizingMaskIntoConstraints = false
-        addScanButton.addTarget(self, action: #selector(startScanningAction), for: .allEvents)
         self.view.addSubview(addScanButton)
-        
-        scanTexView = UITextView()
-        //scanTexView.backgroundColor = .cyan
-        scanTexView.textColor = .white
-        scanTexView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(scanTexView)
-        
-        scanView = UIImageView()
-        scanView.contentMode = .scaleAspectFit
-        //scanView.backgroundColor = .blue
-        scanView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(scanView)
-        
-        
     }
     
     
